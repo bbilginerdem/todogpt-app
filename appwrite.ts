@@ -8,7 +8,7 @@ client
 
 
 const account = new Account(client);
-const database = new Databases(client);
+const databases = new Databases(client);
 const storage = new Storage(client);
 
-export { client, account, database, storage, ID };
+export { client, account, databases, storage, ID };
