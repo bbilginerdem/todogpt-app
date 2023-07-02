@@ -1,4 +1,4 @@
-import { databases } from "@/../appwrite"
+import { databases } from "../appwrite"
 
 export const getTodosGroupedByColumn = async () => {
   const data = await databases.listDocuments(
@@ -25,5 +25,24 @@ export const getTodosGroupedByColumn = async () => {
     return acc
   }, new Map<TypedColumn, Column>())
 
-  console.log(columns)
+  // if columns doesn't have inprogress, todo and done, add them with empty todos
+  const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"]
+  for (const type of columnTypes) {
+    if (!columns.get(type)) {
+      columns.set(type, { id: type, todos: [] })
+    }
+  }
+
+  // sort the columns by the order of columnTypes
+  const sortedColumns = new Map(
+    Array.from(columns.entries()).sort((a, b) => (
+      columnTypes.indexOf(a[0]) - columnTypes.indexOf(b[0])
+    ))
+  )
+
+  const board: Board = {
+    columns: sortedColumns
+  }
+
+  return board
 }
