@@ -5,7 +5,6 @@ const formatTodosForAI = (board: Board) => {
     map[key] = value.todos
     return map
   }, {} as { [key in TypedColumn]: Todo[] })
-  console.log("🚀 ~ file: formatTodosForAI.ts:8 ~ flatArray ~ flatArray:", flatArray)
 
   const flatArrayCounted = Object.entries(flatArray).reduce(
     (map, [key, value]) => {
@@ -13,7 +12,6 @@ const formatTodosForAI = (board: Board) => {
       return map
     },
     {} as { [key in TypedColumn]: number })
-  console.log("🚀 ~ file: formatTodosForAI.ts:16 ~ formatTodosForAI ~ flatArrayCounted:", flatArrayCounted)
 
   return flatArrayCounted
 }
