@@ -10,15 +10,21 @@ interface BoardState {
   setBoardState: (board: Board) => void;
   updateTodoInDB: (todo: Todo, columnId: TypedColumn) => void;
   deleteTask: (taskIndex: number, todo: Todo, id: TypedColumn) => void;
+  newTaskInput: string,
+  setNewTaskInput: (newTaskInput: string) => void
+  newTaskType: TypedColumn,
+  setNewTaskType: (newTaskType: TypedColumn) => void
+  image: File | null,
+  setImage: (image: File | null) => void
 }
 
 export const useBoardStore = create<BoardState>((set, get) => ({
   board: {
     columns: new Map<TypedColumn, Column>()
   },
+  setBoardState: (board) => set({ board }),
 
   searchString: '',
-
   setSearchString: (searchString) => set({ searchString }),
 
   getBoard: async () => {
@@ -26,7 +32,6 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     set({ board })
   },
 
-  setBoardState: (board) => set({ board }),
 
   deleteTask: async (taskIndex: number, todo: Todo, id: TypedColumn) => {
     const newColumns = new Map(get().board.columns)
@@ -57,4 +62,13 @@ export const useBoardStore = create<BoardState>((set, get) => ({
       }
     )
   },
+
+  newTaskInput: '',
+  setNewTaskInput: (input: string) => set({ newTaskInput: input }),
+
+  newTaskType: 'todo',
+  setNewTaskType: (type: TypedColumn) => set({ newTaskType: type }),
+
+  image: null,
+  setImage: (image: File | null) => set({ image })
 }));
