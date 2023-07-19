@@ -14,7 +14,6 @@ function Board() {
 
   const handleOnDragEnd = (result: DropResult) => {
     const { destination, source, draggableId, type } = result
-    // console.log("🚀 ~ file: Board.tsx:17 ~ handleOnDragEnd ~ result:", result)
 
     // Do nothing if dropped outside the list
     if (!destination) return
@@ -30,37 +29,24 @@ function Board() {
 
     // This step is necessary because we need to update the columnId of the todo
     const columns = Array.from(board.columns)
-    // console.log("🚀 ~ file: Board.tsx:33 ~ handleOnDragEnd ~ columns:", columns)
-
     const startColIndex = columns[Number(source.droppableId)]
-    // console.log("🚀 ~ file: Board.tsx:35 ~ handleOnDragEnd ~ startColIndex:", startColIndex)
     const finishColIndex = columns[Number(destination.droppableId)]
-    // console.log("🚀 ~ file: Board.tsx:37 ~ handleOnDragEnd ~ destination.droppableId:", destination.droppableId)
-    // console.log("🚀 ~ file: Board.tsx:37 ~ handleOnDragEnd ~ finishColIndex:", finishColIndex)
-
-    // const startTodoIndex = startColIndex[1].todos[source.index]
-    // const finishTodoIndex = finishColIndex[1].todos[destination.index]
 
     const startCol: Column = {
       id: startColIndex[0],
       todos: startColIndex[1].todos,
     }
-    // console.log("🚀 ~ file: Board.tsx:44 ~ handleOnDragEnd ~ startCol:", startCol)
-
     const finishCol: Column = {
       id: finishColIndex[0],
       todos: finishColIndex[1].todos,
     }
-    // console.log("🚀 ~ file: Board.tsx:54 ~ handleOnDragEnd ~ finishCol:", finishCol)
 
     if (!startCol || !finishCol) return
 
     if (source.index === destination.index && startCol === finishCol) return
 
-    // const newTodos = startCol.todos.filter((_, idx) => idx !== source.index)
     const newTodos = startCol.todos
     const [todoMoved] = newTodos.splice(source.index, 1)
-    // console.log("🚀 ~ file: Board.tsx:62 ~ handleOnDragEnd ~ todoMoved:", todoMoved)
 
     if (startCol.id === finishCol.id) {
       // If the todo is dropped in the same column, we need to update the index of the todo
@@ -78,9 +64,7 @@ function Board() {
     } else {
       // If the todo is dropped in a different column, we need to update the columnId and index of the todo
       const finishTodos = Array.from(finishCol.todos)
-      // console.log("🚀 ~ file: Board.tsx:81 ~ handleOnDragEnd ~ finishTodos:", finishTodos)
       finishTodos.splice(destination.index, 0, todoMoved)
-      // console.log("🚀 ~ file: Board.tsx:83 ~ handleOnDragEnd ~ finishTodos.splice(destination.index, 0, todoMoved):", finishTodos.splice(destination.index, 0, todoMoved))
 
       const newColumns = new Map(board.columns)
       newColumns.set(startCol.id, { id: startCol.id, todos: newTodos })
@@ -88,7 +72,6 @@ function Board() {
 
       // Update in DB
       updateTodoInDB(todoMoved, finishCol.id)
-
       setBoardState({ ...board, columns: newColumns })
     }
   }

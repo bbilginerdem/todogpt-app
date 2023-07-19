@@ -8,19 +8,22 @@ const types = [
     id: "todo",
     name: "To Do",
     description: "A new task that needs to be done",
-    color: "red-500"
+    color: "bg-red-500",
+    offset: "ring-offset-red-500"
   },
   {
     id: "inprogress",
     name: "In Progress",
     description: "A task that is currently being worked on",
-    color: "yellow-500"
+    color: "bg-yellow-500",
+    offset: "ring-offset-yellow-500"
   },
   {
     id: "done",
     name: "Done",
     description: "A task that has been completed",
-    color: "green-500"
+    color: "bg-green-500",
+    offset: "ring-offset-green-500"
   }
 ]
 
@@ -39,7 +42,7 @@ function TaskTypeRadioGroup() {
               <RadioGroup.Option
                 key={type.id}
                 value={type.id}
-                className={({ active, checked }) => `${active ? `ring-2 ring-white ring-opacity-60 ring-offset-2 ring-offset-${type.color}` : ""} ${checked ? `bg-${type.color} ring-2 ring-offset-2 ring-offset-${type.color}/20 ring-white ring-opacity-60` : 'bg-white/50'} relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`}
+                className={({ active, checked }) => `${active ? `ring-2 ring-white ring-opacity-60 ring-offset-2 ${type.offset}` : ""} ${checked ? `${type.color} ring-white ring-opacity-60` : 'bg-white/50'} relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`}
               >
                 {({ active, checked }) => (
                   <>
@@ -70,7 +73,6 @@ function TaskTypeRadioGroup() {
                 )}
               </RadioGroup.Option>
             ))}
-
           </div>
         </RadioGroup>
       </div>

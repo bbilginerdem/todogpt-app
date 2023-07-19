@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   // communicate with openAI api
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
-    temperature: 0.2,
+    temperature: 1,
     n: 1,
     stream: false,
     messages: [
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
         content: `Hi there, provide me with a summary of my todos: ${JSON.stringify(todos)}`,
       }
     ],
-    max_tokens: 60,
+    max_tokens: 50,
   })
 
   const { data } = response
